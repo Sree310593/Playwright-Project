@@ -25,7 +25,7 @@ test('First Playwright test', async ({ browser})=>
    await page.locator("#signInBtn").click();
    console.log(await page.locator(".card-body a").nth(0).inputValue());
 //to get 2nd element
-   //console.log(await page.locator(".card-body a").nth(1).textContent());
+   //console.log(https://github.com/Sree310593/Playwright-Project page.locator(".card-body a").nth(1).textContent());
 //to get 3rd element 
    //console.log(await page.locator(".card-body a").nth(2).textContent());
 // to get all the text contents of the elements
@@ -35,7 +35,7 @@ test('First Playwright test', async ({ browser})=>
 }); 
  
 
-test.only('UI Controls', async ({page})=>
+test('UI Controls', async ({page})=>
 { 
 //open page directly
    await page.goto("https://rahulshettyacademy.com/loginpagePractise/", { waitUntil : 'domcontentloaded' });
@@ -64,16 +64,48 @@ test.only('UI Controls', async ({page})=>
   //log console for the document link
    await expect(docLink).toHaveAttribute("class","blinkingText");
  // Validate if the document link has the correct class attribute
-  await expect(docLink).toHaveAttribute("class", "blinkingText");
+   await expect(docLink).toHaveAttribute("class", "blinkingText");
    await page.locator("#signInBtn").click();
    console.log(await page.locator(".card-body a").nth(0).textContent());
-//to get 2nd element
+ //to get 2nd element
    //console.log(await page.locator(".card-body a").nth(1).textContent());
-//to get 3rd element 
+ //to get 3rd element 
    //console.log(await page.locator(".card-body a").nth(2).textContent());
-// to get all the text contents of the elements
+ // to get all the text contents of the elements
   const allTexts = await page.locator(".card-body a").allTextContents();
   console.log(allTexts);   
   expect(allTexts.length).toBeGreaterThan(0);
 }); 
  
+
+
+
+
+
+test('child window handling', async ({browser})=>
+{
+
+
+   const context = await browser.newContext();
+   const page = await context.newPage();
+   await page.goto("https://rahulshettyacademy.com/loginpagePractise/", { waitUntil : 'domcontentloaded' });
+  
+  //Storing the locators for document link and page content
+   const docLink = "a[href*='documents-request']";
+   const pageContent = "//p[contains(@class,'red')]";
+   const username = ("#username");
+
+   //listen for the new page pending, rejected, fulfilled
+   const [newPage] = await Promise.all(
+      [
+   context.waitForEvent('page'),
+   page.locator(docLink).click(),
+      ])
+      const  text = await newPage.locator(pageContent).textContent();
+      const arrayText = text.split("@");
+      const domain = arrayText [1].split(" ")[0];
+      console.log(domain);
+      await page.locator(username).fill(domain);
+      console.log(await page.locator(username).inputValue());
+
+   });
