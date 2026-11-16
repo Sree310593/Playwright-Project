@@ -19,6 +19,10 @@ test.only('@Webst Client App login', async ({ page }) => {
    const registerBtn = "#login";
    const logingBtn = "#login";
    const accountCreationSuccess = "//h1[contains(text(),'Account Created Successfully')]";
+   const productCard = ".card-body";
+   const productName = "ZARA COAT 3"
+   const cartBtn = "//button[contains(@routerlink,'cart')]";
+   const checkoutBtn = "//button[contains(text(),'Checkout')]";
 
 
 await page.locator(registerHereLink).click();
@@ -49,4 +53,48 @@ console.log("Logging in with:" +uniqueEmail);
 await page.locator("#userEmail").fill(uniqueEmail);
 await page.locator("#userPassword").fill("Iamking@000");
 await page.locator(logingBtn).click();
-}); 
+//wait the card to be visible
+await page.locator(productCard).first().waitFor();
+//select the product from the list and add to cart
+const products = page.locator(productCard);
+const count = await products.count();
+for (let i = 0; i < count; i++) {
+ const name = (await products.nth(i).locator("b").textContent()).trim();
+ if (name === productName) {
+   // add to cart
+   await products.nth(i).locator("text= Add To Cart").click();
+   break;
+ }
+}
+//click on cart button
+await page.locator(cartBtn).click();
+//wait for the first item in the cart to be visible by tag
+await page.locator(`div li`).first().waitFor();
+//assertion for product in cart - pseudo class
+expect(page.locator(`h3:has-text('${productName}')`).isVisible()).toBeTruthy();
+//click on checkout button
+await page.locator(checkoutBtn).click();
+//select country from dropdown type one by one letter
+ await page.getByPlaceholder('Select Country').pressSequentially("ind", { delay: 150 }) 
+//wait for the dropdown to appear and select the country
+   const dropdown = page.locator(".ta-results");
+   await dropdown.waitFor();
+   const optionsCount = await dropdown.locator("button").count();
+   for (let i = 0; i < optionsCount; ++i) {
+      const text = await dropdown.locator("button").nth(i).textContent();
+      //contains textincludes = contains check for India in the dropdown options
+      if (text.includes("India")) {
+         await dropdown.locator("button").nth(i).click();
+         break;
+}
+      }
+    await expect (page.locator('.user__name [type="text"]').first()).toHaveText(uniqueEmail);
+   //click on the place order
+   await page.locator(".action__submit").click();
+   //assertion for order confirmation message
+   await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
+   //get the order ID from the confirmation page
+   const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").first().textContent();
+   console.log("Order ID: " + orderId);  
+   
+});
