@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
  
  
  
-test.only('@Webst Client App login', async ({ page }) => {
+test('@Webst Client App login', async ({ page }) => {
 
    await page.goto("https://rahulshettyacademy.com/client");
    const registerHereLink = "//a[contains(text(),'Register here')]";
