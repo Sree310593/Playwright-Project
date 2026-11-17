@@ -23,6 +23,9 @@ test.only('@Webst Client App login', async ({ page }) => {
    const productName = "ZARA COAT 3"
    const cartBtn = "//button[contains(@routerlink,'cart')]";
    const checkoutBtn = "//button[contains(text(),'Checkout')]";
+   const orderButton ="//i[@class='fa fa-handshake-o']"
+   const orderRowId ="tbody tr"
+   const orderIdSummaryPage ="//div[@class='col-text -main']"
 
 
 await page.locator(registerHereLink).click();
@@ -94,7 +97,22 @@ await page.locator(checkoutBtn).click();
    //assertion for order confirmation message
    await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
    //get the order ID from the confirmation page
-   const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").first().textContent();
+   const orderId = (await page.locator(".em-spacer-1 .ng-star-inserted").first().textContent()).replaceAll("|", "").trim();
    console.log("Order ID: " + orderId);  
-   
+   await page.locator(orderButton).click();
+   await page.locator(orderRowId).first().waitFor();
+   // iterate through the order rows to find the matching order ID
+   const rows = page.locator(orderRowId);
+   const rowCount = await rows.count();
+   for (let i = 0; i < rowCount; i++) {
+    const rowOrderId = (await rows.nth(i).locator("th").textContent()).trim();
+   if (orderId.includes(rowOrderId)) {
+   await rows.nth(i).locator("button").first().click();
+   break;
+ }
+}
+       await page.locator(orderIdSummaryPage).waitFor();
+       // get the order id  and assert it contains the order ID
+       const orderSummaryText = await page.locator(orderIdSummaryPage).textContent();
+       expect(orderSummaryText.includes(orderId)).toBeTruthy();
 });
