@@ -8,10 +8,15 @@ test('Playwright Special locators', async ({ page }) => {
     await page.getByLabel("Gender").selectOption("Female");
     await page.getByPlaceholder("Password").fill("abc123");
     await page.getByRole("button", {name: 'Submit'}).click();
-    await page.getByText("Success! The Form has been submitted successfully!.").isVisible();
+    // 5 sec default timeout for expect assertions -- {timeout 10000} step level 
+    await expect (page.getByText("Success! The Form has been submitted successfully!.")).toBeVisible({timeout: 10000});
     await page.getByRole("link",{name : "Shop"}).click();
     await page.locator("app-card").filter({hasText: 'Nokia Edge'}).getByRole("button").click();
-
-    
-     
+ 
 });
+
+
+
+
+
+
