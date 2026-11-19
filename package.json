@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test:functional": "playwright test Functional.spec.js"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
