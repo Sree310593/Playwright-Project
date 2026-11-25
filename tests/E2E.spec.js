@@ -8,9 +8,10 @@
 
 const { test, expect } = require('@playwright/test');
 const POManager = require('../pages/POManager');
+const dataSets = require("../utils/placeorderTestData.json");
 
-test('@Webst Client App login', async ({ page }) => {
-
+for (const dataSet of dataSets) {
+test(`@Webst Client App login for ${dataSet.productName}`, async ({ page }) => {
    const poManager = new POManager(page);
    const {
       loginPage,
@@ -21,17 +22,17 @@ test('@Webst Client App login', async ({ page }) => {
       ordersPage
    } = poManager;
    await loginPage.open();
-   const productName = dashboardPage.productName;
+   const { emailName, emailDomain, password, productName } = dataSet;
 
 await loginPage.openRegistration();
-const uniqueEmail = `subhosree+${Date.now()}@example.com`;
+const uniqueEmail = `${emailName}+${Date.now()}${emailDomain}`;
 console.log(uniqueEmail);
-await registrationPage.register(uniqueEmail);
+await registrationPage.register(uniqueEmail, password);
 await expect(registrationPage.accountCreationSuccess).toContainText("Account Created Successfully");
 await registrationPage.continueToLogin();
 
 console.log("Logging in with:" +uniqueEmail);
-await loginPage.login(uniqueEmail, registrationPage.passwordValue);
+await loginPage.login(uniqueEmail, password);
 
 await dashboardPage.addProductToCart(productName);
 await dashboardPage.openCart();
@@ -50,3 +51,4 @@ console.log("Order ID: " + orderId);
 await ordersPage.openOrder(orderId);
 await expect(ordersPage.orderIdSummaryPage).toContainText(orderId);
 });
+}
