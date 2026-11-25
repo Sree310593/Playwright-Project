@@ -18,3 +18,7 @@ node_modules/
 
 # Personal/local explanations
 /E2E_LINE_BY_LINE_EXPLANATION.md
+
+# Publish only the main E2E spec
+/tests/*.spec.js
+!/tests/E2E.spec.js
