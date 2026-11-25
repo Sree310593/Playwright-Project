@@ -7,3 +7,14 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 .env
+.env.example
+
+# Local UM-only functional suite
+/tests/UMFunctional.spec.js
+/pages/LoginPage.js
+/testData/
+/UM_QUICK_REFERENCE.js
+/UM_RUNNING_TESTS.md
+
+# Personal/local explanations
+/E2E_LINE_BY_LINE_EXPLANATION.md
