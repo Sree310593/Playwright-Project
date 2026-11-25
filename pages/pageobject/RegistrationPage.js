@@ -19,6 +19,22 @@ class RegistrationPage {
         this.loginAfterRegistrationBtn = page.locator("//button[contains(text(),'Login')]");
     }
 
+    async register(email) {
+        await this.firstName.fill(this.firstNameValue);
+        await this.lastName.fill(this.lastNameValue);
+        await this.email.fill(email);
+        await this.phNo.fill(this.phoneValue);
+        await this.gender.click();
+        await this.occupation.selectOption(this.occupationValue);
+        await this.password.fill(this.passwordValue);
+        await this.confirmPassword.fill(this.passwordValue);
+        await this.ageConfirmation.click();
+        await this.registerBtn.click();
+    }
+
+    async continueToLogin() {
+        await this.loginAfterRegistrationBtn.click();
+    }
 }
 
 module.exports = RegistrationPage;
