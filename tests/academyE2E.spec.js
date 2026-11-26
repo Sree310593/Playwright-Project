@@ -1,20 +1,18 @@
 const { test, expect } = require('@playwright/test');
-const LoginPage = require('../pages/pageobject_E2E/LoginPage');
-const RegistrationPage = require('../pages/pageobject_E2E/RegistrationPage');
-const DashboardPage = require('../pages/pageobject_E2E/DashboardPage');
-const CartPage = require('../pages/pageobject_E2E/CartPage');
-const CheckoutPage = require('../pages/pageobject_E2E/CheckoutPage');
-const OrdersPage = require('../pages/pageobject_E2E/OrdersPage');
+const AcademyPOManager = require('../pages/AcademyPOManager');
 const dataSets = require("../utils/placeorderTestData.json");
 
 for (const dataSet of dataSets) {
 test(`@Webst Client App login for ${dataSet.productName}`, async ({ page }) => {
-   const loginPage = new LoginPage(page);
-   const registrationPage = new RegistrationPage(page);
-   const dashboardPage = new DashboardPage(page);
-   const cartPage = new CartPage(page);
-   const checkoutPage = new CheckoutPage(page);
-   const ordersPage = new OrdersPage(page);
+   const poManager = new AcademyPOManager(page);
+   const {
+      loginPage,
+      registrationPage,
+      dashboardPage,
+      cartPage,
+      checkoutPage,
+      ordersPage
+   } = poManager;
    await loginPage.open();
    const { emailName, emailDomain, password, productName } = dataSet;
 
