@@ -1,0 +1,53 @@
+{
+    "signupData":
+     {
+
+        "name": "SDas",
+        "email": "testuser",
+        "extension": "@gmail.com"
+},
+    "passwordData": {
+    "password": "Password123"
+    },
+
+    "accountInformation":
+    {
+
+     "DOB":
+         {
+        "Day": "1",
+        "Month": "January",
+        "years": "1967"
+    }
+    },
+     "addressInformation": {
+        "firstName": "SDas",
+        "lastName": "Das",
+        "address": "123 Main Street",
+        "country": "India",
+        "state": "West Bengal",
+        "city": "Kolkata",
+        "zipcode": "700001",
+        "phone": "1234567890"
+
+
+    },
+
+    "PLP": {
+        "productNames": [
+            "Stylish Dress",
+            "Blue Top"
+        ]
+    },
+
+    "cart": {
+        "nameOnCard": "SDas",
+        "cardNumber": "4111111111111111",
+        "cvc": "123",
+        "expirationMonth": "12",
+        "expirationYear": "2030"
+    }
+
+
+
+}

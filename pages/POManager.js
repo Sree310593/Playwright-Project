@@ -1,9 +1,9 @@
-const LoginPage = require('./pageobject/LoginPage');
-const RegistrationPage = require('./pageobject/RegistrationPage');
-const DashboardPage = require('./pageobject/DashboardPage');
-const CartPage = require('./pageobject/CartPage');
-const CheckoutPage = require('./pageobject/CheckoutPage');
-const OrdersPage = require('./pageobject/OrdersPage');
+const LoginPage = require('./pageobject_E2E/LoginPage');
+const RegistrationPage = require('./pageobject_E2E/RegistrationPage');
+const DashboardPage = require('./pageobject_E2E/DashboardPage');
+const CartPage = require('./pageobject_E2E/CartPage');
+const CheckoutPage = require('./pageobject_E2E/CheckoutPage');
+const OrdersPage = require('./pageobject_E2E/OrdersPage');
 
 class POManager {
     constructor(page) {
