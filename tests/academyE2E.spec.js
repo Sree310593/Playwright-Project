@@ -1,26 +1,20 @@
-//Benefits:
-// One place to initialize all page objects
-// Less repeated code across test files
-// Easier addition of new pages
-// Cleaner test imports and setup
-// It is useful when tests use several page objects, as your E2E test does.
-
-
 const { test, expect } = require('@playwright/test');
-const POManager = require('../pages/POManager');
+const LoginPage = require('../pages/pageobject_E2E/LoginPage');
+const RegistrationPage = require('../pages/pageobject_E2E/RegistrationPage');
+const DashboardPage = require('../pages/pageobject_E2E/DashboardPage');
+const CartPage = require('../pages/pageobject_E2E/CartPage');
+const CheckoutPage = require('../pages/pageobject_E2E/CheckoutPage');
+const OrdersPage = require('../pages/pageobject_E2E/OrdersPage');
 const dataSets = require("../utils/placeorderTestData.json");
 
 for (const dataSet of dataSets) {
 test(`@Webst Client App login for ${dataSet.productName}`, async ({ page }) => {
-   const poManager = new POManager(page);
-   const {
-      loginPage,
-      registrationPage,
-      dashboardPage,
-      cartPage,
-      checkoutPage,
-      ordersPage
-   } = poManager;
+   const loginPage = new LoginPage(page);
+   const registrationPage = new RegistrationPage(page);
+   const dashboardPage = new DashboardPage(page);
+   const cartPage = new CartPage(page);
+   const checkoutPage = new CheckoutPage(page);
+   const ordersPage = new OrdersPage(page);
    await loginPage.open();
    const { emailName, emailDomain, password, productName } = dataSet;
 
